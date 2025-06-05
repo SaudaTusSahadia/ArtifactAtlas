@@ -90,24 +90,16 @@ const Navbar = () => {
                                     type="radio"
                                     name="theme-dropdown"
                                     className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+                                    aria-label="synthwave"
+                                    value="synthwave" />
+                            </li>
+                            <li>
+                                <input
+                                    type="radio"
+                                    name="theme-dropdown"
+                                    className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
                                     aria-label="Cyberpunk"
                                     value="cyberpunk" />
-                            </li>
-                            <li>
-                                <input
-                                    type="radio"
-                                    name="theme-dropdown"
-                                    className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                                    aria-label="Valentine"
-                                    value="valentine" />
-                            </li>
-                            <li>
-                                <input
-                                    type="radio"
-                                    name="theme-dropdown"
-                                    className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                                    aria-label="Aqua"
-                                    value="aqua" />
                             </li>
                             <li>
                                 <input

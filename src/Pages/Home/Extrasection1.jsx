@@ -24,7 +24,7 @@ const Extrasection1 = () => {
             <Landmark className="w-8 h-8 " />
             Preserving the Past
           </h2>
-          <p className="text-lg mb-6 leading-relaxed text-secondary">
+          <p className="text-lg mb-6 leading-relaxed text-accent">
             Explore rare artifacts that shaped human civilization — from ancient scrolls to timeless relics. Our collection showcases heritage preserved across centuries.
           </p>
           <motion.button
