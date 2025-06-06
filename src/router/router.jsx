@@ -9,6 +9,9 @@ import SignIn from "../Pages/SignIn/SignIn";
 import Register from "../Pages/Register/Register";
 import PrivateRoute from "../Context/PrivateRoute";
 import AddArtifacts from "../Pages/AddArtifacts/AddArtifacts";
+import MyArtifacts from "../MyArtifacts/MyArtifacts";
+import LikedArtifacts from "../Pages/LikedArtifacts/LikedArtifacts";
+import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,14 @@ const router = createBrowserRouter([
       {
         path: "/addArtifacts",
         element: <PrivateRoute><AddArtifacts></AddArtifacts></PrivateRoute>
+      },
+      {
+        path: "/myArtifacts",
+        element: <PrivateRoute><MyArtifacts></MyArtifacts></PrivateRoute>
+      },
+      {
+        path: "/likedArtifacts",
+        element: <PrivateRoute><LikedArtifacts></LikedArtifacts></PrivateRoute>
       }
     ]
   },
@@ -40,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/auth/register",
         Component: Register
+      },
+      {
+        path: "/auth/forgetPassword",
+        Component: ForgetPassword
       }
     ]
   }

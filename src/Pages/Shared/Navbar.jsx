@@ -4,6 +4,8 @@ import { Link, NavLink } from 'react-router';
 import './Navbar.css';
 import { AuthContext } from '../../Context/AuthContext';
 import { auth } from '../../firebase/firebase.init';
+import userimg from '../../assets/user.png'
+import { ToastContainer } from 'react-toastify';
 
 const Navbar = () => {
 
@@ -24,7 +26,7 @@ const Navbar = () => {
         <li><NavLink to="/allArtifacts">All Artifacts</NavLink></li>
         {
             user && <>
-            <li><NavLink to="/addArtifacts">Add Artifacts</NavLink></li>
+                <li><NavLink to="/addArtifacts">Add Artifacts</NavLink></li>
             </>
         }
     </>
@@ -131,16 +133,57 @@ const Navbar = () => {
                         </ul>
                     </div>
                 </div>
-                
-                    {
-                        user ? <button className='btn' onClick={handleSignOut}>Sign Out</button> :
-                            <>
-                                <Link className='btn' to="/auth/register">Register</Link>
-                                <Link className='btn' to="/auth/signIn">SignIn</Link>
-                            </>
-                    }
+                {
+                    user ? (
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                    <img
+                                        alt={user.displayName || user.email}
+                                        src={user.photoURL || userimg}
+                                    />
+                                </div>
+                            </div>
+                            <ul
+                                tabIndex={0}
+                                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-20 mt-3 w-60 p-3 shadow-lg"
+                            >
+                                <li className="mb-2 flex items-center gap-3 border-b pb-2">
+                                    <div className="avatar">
+                                        <div className="w-8 rounded-full">
+                                            <img
+                                                alt={user.displayName || user.email}
+                                                src={user.photoURL || userimg}
+                                            />
+                                        </div>
+                                    </div>
+                                    <span className="font-semibold">{user.displayName || user.email}</span>
+                                </li>
+                                <li>
+                                    <Link to="/myArtifacts" className="flex items-center gap-2 hover:bg-primary hover:text-white rounded px-2 py-1 transition">
+                                        <span className="material-icons text-base">My Artifacts</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/likedArtifacts" className="flex items-center gap-2 hover:bg-primary hover:text-white rounded px-2 py-1 transition">
+                                        <span className="material-icons text-base">Liked Artifacts</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button className="btn btn-error btn-sm mt-2 w-full" onClick={handleSignOut}>
+                                        <span className="material-icons text-base mr-1">Logout</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-2">
+                            <Link className="btn btn-primary btn-sm" to="/auth/register">Register</Link>
+                            <Link className="btn btn-outline btn-sm" to="/auth/signIn">Login</Link>
+                        </div>
+                    )
+                }
 
-                
             </div>
         </div>
     );

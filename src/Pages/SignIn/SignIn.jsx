@@ -1,11 +1,20 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../Shared/SocialLogin';
 import { FaEnvelope, FaLock, FaSignInAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { AuthContext } from '../../Context/AuthContext';
+import { toast, ToastContainer } from 'react-toastify';
+import animation from '../../assets/login.json';
+import Lottie from 'lottie-react';
+import { Link } from 'react-router';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { LockIcon, Mail } from 'lucide-react';
+import { BsPass } from 'react-icons/bs';
 
 const SignIn = () => {
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { signInUser } = use(AuthContext)
   const location = useLocation();
   const navigate = useNavigate()
@@ -20,72 +29,119 @@ const SignIn = () => {
     signInUser(email, password)
       .then(result => {
         console.log(result);
+        toast.success("You logged in successfully!", {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "colored",
+        });
         navigate(from)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
+        setError(error.code);
+        toast.error('You are not registered yet. Please register first to access!', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          // transition: Bounce,
+        });
       })
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col lg:flex-row gap-10 items-center justify-center w-full max-w-5xl p-5 md:p-10">
-        <motion.div
-          className="w-full lg:w-1/2 flex justify-center"
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, type: "spring" }}
-        >
-        </motion.div>
-        <motion.div
-          className="card bg-base-100 shrink-0 shadow-2xl w-full max-w-md"
-          initial={{ opacity: 0, y: 80 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, type: "spring" }}
-        >
-          <div className="card-body">
-            <h1 className="text-3xl font-extrabold text-primary flex items-center gap-2 mb-4">
-              <FaSignInAlt className="text-accent" /> Sign In
-            </h1>
-            <form onSubmit={handleSignIn} className="space-y-4">
-              <div>
-                <label className="label font-semibold flex items-center gap-2">
-                  <FaEnvelope className="text-blue-600" /> Enter your email
-                </label>
+    <div className="min-h-screen flex items-center justify-center  px-4 py-12">
+      <title>Login | ArtifactAtlas</title>
+      <ToastContainer />
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className=" shadow-2xl rounded-3xl border border-blue-200 w-full max-w-5xl flex flex-col md:flex-row overflow-hidden"
+      >
+        {/* Animation Section */}
+        <div className="md:w-1/2  flex items-center justify-center p-8">
+          <Lottie animationData={animation} loop={true} className="w-full max-w-xs md:max-w-md" />
+        </div>
+
+        {/* Form Section */}
+        <div className="md:w-1/2 p-8 flex flex-col justify-center">
+          <h1 className="text-3xl font-extrabold text-center text-primary mb-2">Welcome Back!</h1>
+          <p className="text-center text-base text-gray-500 mb-6">Login to your ArtifactAtlas account</p>
+
+          <form onSubmit={handleSignIn} className="space-y-5">
+            <div>
+              <label className="text-sm font-semibold text-gray-500 flex gap-2"><Mail size={20} className='text-primary'/> Email Address</label>
+              <div className="relative mt-1">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400">
+                  <FaEnvelope />
+                </span>
                 <input
                   type="email"
-                  name='email'
-                  className="input input-bordered w-full"
+                  name="email"
+                  className="input input-bordered w-full pl-10"
                   placeholder="example@gmail.com"
                   required
                 />
               </div>
-              <div>
-                <label className="label font-semibold flex items-center gap-2">
-                  <FaLock className="text-purple-600" /> Enter your password
-                </label>
+            </div>
+
+            <div>
+              <label className="text-sm font-semibold text-gray-500 flex gap-2"><LockIcon size={20} className='text-primary'></LockIcon> Password</label>
+              <div className="relative mt-1">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400">
+                  <FaLock />
+                </span>
                 <input
-                  type="password"
-                  name='password'
-                  className="input input-bordered w-full"
-                  placeholder="............"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  className="input input-bordered w-full pl-10 pr-10"
+                  placeholder="••••••••"
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute top-1/2 right-3 -translate-y-1/2 bg-gray-100 p-1.5 rounded-full text-lg text-gray-600 hover:bg-gray-200 transition"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                </button>
               </div>
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 4px 24px #6366f1" }}
-                whileTap={{ scale: 0.97 }}
-                type="submit"
-                className="btn btn-primary btn-block mt-4 flex items-center gap-2 justify-center"
-              >
-                <FaSignInAlt /> Sign In
-              </motion.button>
-            </form>
-            <div className='divider'>or</div>
-            <SocialLogin from={from} />
-          </div>
-        </motion.div>
-      </div>
+            </div>
+
+            <div className="text-right">
+              <Link to="/auth/forgetPassword" className="text-sm text-blue-600 hover:underline">
+                Forgot password?
+              </Link>
+            </div>
+
+            {error && <p className="text-sm text-red-500">{error}</p>}
+
+            <button
+              type="submit"
+              className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2"
+            >
+              <FaSignInAlt className="inline" /> Login
+            </button>
+          </form>
+
+          <div className="divider my-6">or</div>
+
+          <SocialLogin />
+
+          <p className="text-center text-sm text-gray-600 mt-6">
+            Don't have an account?{" "}
+            <Link to="/auth/register" className="text-blue-500 hover:underline font-semibold">
+              Register
+            </Link>
+          </p>
+        </div>
+      </motion.div>
     </div>
   );
 };
