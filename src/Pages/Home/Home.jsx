@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div>
             <Slider></Slider>
-            <div className='max-w-7xl mx-auto'>
+            <div className='max-w-8xl mx-auto'>
                 <Extrasection1></Extrasection1>
                 <Extrasection2></Extrasection2>
             </div>

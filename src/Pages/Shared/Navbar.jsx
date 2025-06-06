@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { use } from 'react';
 import logo from '../../assets/logo.png';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import './Navbar.css';
+import { AuthContext } from '../../Context/AuthContext';
+import { auth } from '../../firebase/firebase.init';
 
 const Navbar = () => {
+
+    const { user, signOutUser } = use(AuthContext);
+
+
+    const handleSignOut = () => {
+        signOutUser(auth)
+            .then(() =>
+                console.log('user signed out'))
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/allArtifacts">All Artifacts</NavLink></li>
+        {
+            user && <>
+            <li><NavLink to="/addArtifacts">Add Artifacts</NavLink></li>
+            </>
+        }
     </>
 
     return (
@@ -112,7 +131,16 @@ const Navbar = () => {
                         </ul>
                     </div>
                 </div>
-                <a className="btn">Button</a>
+                
+                    {
+                        user ? <button className='btn' onClick={handleSignOut}>Sign Out</button> :
+                            <>
+                                <Link className='btn' to="/auth/register">Register</Link>
+                                <Link className='btn' to="/auth/signIn">SignIn</Link>
+                            </>
+                    }
+
+                
             </div>
         </div>
     );
