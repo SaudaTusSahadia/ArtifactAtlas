@@ -17,7 +17,7 @@ const AddArtifacts = () => {
         console.log(newArtifact);
 
         //save artifact to the database
-        axios.post('http://localhost:3000/artifacts', newArtifact)
+        axios.post('https://assignment11-server-one-gules.vercel.app/artifacts', newArtifact)
             .then(res => {
                 console.log(res)
                 if (res.data.insertedId) {

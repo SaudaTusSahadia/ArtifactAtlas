@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/allArtifacts",
-        loader: () => fetch("http://localhost:3000/artifacts"),
+        loader: () => fetch('https://assignment11-server-one-gules.vercel.app/artifacts'),
         Component: AllArtifacts
       },
       {
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/artifactDetails/:id",
-        loader: ({params})=> fetch(`http://localhost:3000/artifacts/${params.id}`),
+        loader: ({params})=> fetch(`https://assignment11-server-one-gules.vercel.app/artifacts/${params.id}`),
         element: <PrivateRoute><ArtifactDetails></ArtifactDetails></PrivateRoute>
       }
     ]
