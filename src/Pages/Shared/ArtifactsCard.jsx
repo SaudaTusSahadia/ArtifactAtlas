@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Eye } from 'lucide-react';
+import { Link } from 'react-router';
 
 const ArtifactsCard = ({ artifact }) => {
   const { artifactImage, artifactName, shortDescription } = artifact;
@@ -26,10 +27,12 @@ const ArtifactsCard = ({ artifact }) => {
           <button className="flex items-center gap-1 text-red-500 hover:text-red-600 transition">
             <Heart className="w-5 h-5" /> Like
           </button>
+          <Link to={`/artifactDetails/${artifact._id}`}>
           <button className="btn btn-sm bg-primary font-semibold hover:bg-blue-700 transition rounded-lg flex items-center gap-2">
             <Eye className="w-4 h-4" />
             View Details
           </button>
+          </Link>
         </div>
       </div>
     </motion.div>
