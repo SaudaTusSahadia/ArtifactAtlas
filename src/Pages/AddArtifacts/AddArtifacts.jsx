@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import { FaPlusCircle } from 'react-icons/fa';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const AddArtifacts = () => {
     const { user } = useContext(AuthContext);
@@ -13,6 +15,24 @@ const AddArtifacts = () => {
         const { name, email, ...newArtifact } = data;
         newArtifact.artifactAdder = { name, email };
         console.log(newArtifact);
+
+        //save artifact to the database
+        axios.post('http://localhost:3000/artifacts', newArtifact)
+            .then(res => {
+                console.log(res)
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your artifact has been added successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
     };
 
     return (
@@ -32,15 +52,15 @@ const AddArtifacts = () => {
                         <label className="label font-medium text-secondary">Artifact Image URL</label>
                         <input name='artifactImage' type="text" className="input input-bordered w-full mb-2" placeholder="Enter Artifact Photo URL" required />
 
-                    <label className="label font-medium text-secondary">Artifact Type</label>
-                    <div className="filter">
-                        <input className="btn filter-reset" type="radio" name="artifactType" aria-label="All" />
-                        <input className="btn" type="radio" name="artifactType" value='Writings' aria-label="Writings" />
-                        <input className="btn" type="radio" name="artifactType" value="Weapons" aria-label="Weapons" />
-                        <input className="btn" type="radio" name="artifactType" value="Documents" aria-label="Documents" />
-                        <input className="btn" type="radio" name="artifactType" value="Tools" aria-label="Tools" />
-                    </div>
-                </fieldset>
+                        <label className="label font-medium text-secondary">Artifact Type</label>
+                        <div className="filter">
+                            <input className="btn filter-reset" type="radio" name="artifactType" aria-label="All" />
+                            <input className="btn" type="radio" name="artifactType" value='Writings' aria-label="Writings" />
+                            <input className="btn" type="radio" name="artifactType" value="Weapons" aria-label="Weapons" />
+                            <input className="btn" type="radio" name="artifactType" value="Documents" aria-label="Documents" />
+                            <input className="btn" type="radio" name="artifactType" value="Tools" aria-label="Tools" />
+                        </div>
+                    </fieldset>
 
                     {/* Historical Context */}
                     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4">
