@@ -103,14 +103,6 @@ const Navbar = () => {
                                     type="radio"
                                     name="theme-dropdown"
                                     className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                                    aria-label="Retro"
-                                    value="retro" />
-                            </li>
-                            <li>
-                                <input
-                                    type="radio"
-                                    name="theme-dropdown"
-                                    className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
                                     aria-label="synthwave"
                                     value="synthwave" />
                             </li>
@@ -161,7 +153,7 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                     <Link to="/myArtifacts" className="flex items-center gap-2 hover:bg-primary hover:text-white rounded px-2 py-1 transition">
-                                        <span className="material-icons text-base">My Artifacts</span>
+                                        <span className="material-icons text-base">My Posted Artifacts</span>
                                     </Link>
                                 </li>
                                 <li>
