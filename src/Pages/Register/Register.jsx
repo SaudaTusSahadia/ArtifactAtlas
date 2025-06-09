@@ -1,9 +1,9 @@
-import React, { use, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import SocialLogin from '../Shared/SocialLogin';
 import { FaEnvelope, FaLock, FaUserPlus, FaRegEye, FaRegEyeSlash, FaUser } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import animation from '../../assets/register.json';
 import { Link } from 'react-router';
 import Lottie from 'lottie-react';
@@ -16,9 +16,7 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const location = useLocation();
-  const navigate = useNavigate()
-  const from = location.state?.from?.pathname || "/"
+  const navigate = useNavigate();
 
   const handleRegister = e => {
     e.preventDefault();
@@ -27,7 +25,6 @@ const Register = () => {
     const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name, photo, email, password);
 
     setPasswordError('');
 
@@ -45,11 +42,10 @@ const Register = () => {
       return;
     }
 
-    //create user 
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        updateUser({ user, displayName: name, photoURL: photo })
+        updateUser({ displayName: name, photoURL: photo })
           .then(() => {
             setUser({ ...user, displayName: name, photoURL: photo });
             toast.success('Registered successfully!', {
@@ -58,7 +54,7 @@ const Register = () => {
               theme: 'colored',
             });
             setTimeout(() => {
-              navigate(from);
+              navigate('/');
             }, 1000);
           })
           .catch((error) => {
