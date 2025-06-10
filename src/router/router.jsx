@@ -14,6 +14,12 @@ import LikedArtifacts from "../Pages/LikedArtifacts/LikedArtifacts";
 import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 import ArtifactDetails from "../Pages/ArtifactDetails/ArtifactDetails";
 import UpdateArtifact from "../MyArtifacts/UpdateArtifact/UpdateArtifact";
+import AboutUs from "../components/AboutUs";
+import PrivacyPolicy from "../components/PrivacyPolicy";
+import TermsOfServices from "../components/TermsOfServices";
+import FAQ from "../components/FAQ";
+import MyProfile from "../components/MyProfile";
+import ContactUs from "../components/ContactUs";
 
 const router = createBrowserRouter([
   {
@@ -48,8 +54,32 @@ const router = createBrowserRouter([
       },
       {
         path: "/updateArtifact/:id",
-        loader: ({params})=>fetch(`http://localhost:3000/artifacts/${params.id}`),
+        loader: ({params})=>fetch(`https://assignment11-server-one-gules.vercel.app/artifacts/${params.id}`),
         element: <PrivateRoute><UpdateArtifact></UpdateArtifact></PrivateRoute>
+      },
+      {
+        path: "/about",
+        Component: AboutUs
+      },
+      {
+        path: "/privacy",
+        Component: PrivacyPolicy
+      },
+      {
+        path: "/terms",
+        Component: TermsOfServices
+      },
+      {
+        path: "/faq",
+        Component: FAQ
+      },
+      {
+        path: "/profile",
+        Component: MyProfile
+      },
+      {
+        path: "/contact",
+        Component: ContactUs
       }
     ]
   },
