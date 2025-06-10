@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { Inbox } from 'lucide-react'; // Optional: for an icon
 import { Link } from 'react-router';
@@ -8,6 +8,8 @@ import { CgDetailsMore } from 'react-icons/cg';
 const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
 
   const artifacts = use(ArtifactsCreatedByPromise);
+
+  const [ artiFacts, setArtiFacts ] = useState(artifacts);
 
   const handleDelete = (id) => {
     console.log(id);
@@ -36,6 +38,10 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
                 text: "Your artifact has been deleted.",
                 icon: "success"
               });
+
+              //remove artifacts from the state
+              const remainingArtifacts = artiFacts.filter(art => art._id !== id)
+              setArtiFacts(remainingArtifacts);
             }
           })
       }
@@ -46,10 +52,10 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
     <div className="max-w-5xl mx-auto py-8 px-2">
       <h1 className="text-2xl md:text-3xl font-extrabold text-primary mb-6 text-center">
         Artifacts Posted By You:{' '}
-        <span className="text-secondary">{artifacts.length}</span>
+        <span className="text-secondary">{artiFacts.length}</span>
       </h1>
 
-      {artifacts.length === 0 ? (
+      {artiFacts.length === 0 ? (
         <div className="text-center py-20 text-gray-500 space-y-4">
           <Inbox className="mx-auto h-16 w-16 text-primary" />
           <p className="text-xl font-semibold">No artifacts posted yet.</p>
@@ -70,7 +76,7 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
               </tr>
             </thead>
             <tbody>
-              {artifacts.map((art, index) => (
+              {artiFacts.map((art, index) => (
                 <tr key={art._id} className="hover:bg-primary/10 transition">
                   <th>{index + 1}</th>
                   <td>
@@ -87,17 +93,19 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
                     </div>
                   </td>
                   <td className="max-w-xs text-sm text-gray-500">{art.shortDescription}</td>
-                  <Link to={`/artifactDetails/${art._id}`}>
-                    <td>
-                      <button className="btn btn-sm btn-primary flex items-center gap-2 mt-3.5 hover:bg-purple-300">
+                  <td>
+                    <Link to={`/artifactDetails/${art._id}`}>
+                      <button className="btn btn-sm btn-primary flex items-center gap-2">
                         <CgDetailsMore size={15}></CgDetailsMore>Details
                       </button>
-                    </td>
-                  </Link>
+                    </Link>
+                  </td>
                   <td>
+                    <Link to={`/updateArtifact/${art._id}`}>
                     <button className="btn btn-sm btn-outline btn-primary flex items-center gap-2">
                       <FaEdit /> Edit
                     </button>
+                    </Link>
                   </td>
                   <td>
                     <button onClick={() => handleDelete(art._id)} className="btn btn-sm btn-error flex items-center gap-2">

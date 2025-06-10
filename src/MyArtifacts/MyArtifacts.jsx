@@ -6,7 +6,7 @@ import { ArtifactsCreatedByPromise } from '../api/artifactsApi';
 
 const MyArtifacts = () => {
 
-    const { user } = use(AuthContext)
+    const { user } = use(AuthContext);
 
     return (
         <div>

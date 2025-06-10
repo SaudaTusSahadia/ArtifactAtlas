@@ -13,6 +13,7 @@ import MyArtifacts from "../MyArtifacts/MyArtifacts";
 import LikedArtifacts from "../Pages/LikedArtifacts/LikedArtifacts";
 import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 import ArtifactDetails from "../Pages/ArtifactDetails/ArtifactDetails";
+import UpdateArtifact from "../MyArtifacts/UpdateArtifact/UpdateArtifact";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
         path: "/artifactDetails/:id",
         loader: ({params})=> fetch(`https://assignment11-server-one-gules.vercel.app/artifacts/${params.id}`),
         element: <PrivateRoute><ArtifactDetails></ArtifactDetails></PrivateRoute>
+      },
+      {
+        path: "/updateArtifact/:id",
+        loader: ({params})=>fetch(`http://localhost:3000/artifacts/${params.id}`),
+        element: <PrivateRoute><UpdateArtifact></UpdateArtifact></PrivateRoute>
       }
     ]
   },
