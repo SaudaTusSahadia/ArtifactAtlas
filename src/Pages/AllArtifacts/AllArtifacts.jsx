@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLoaderData } from 'react-router';
 import ArtifactsCard from '../Shared/ArtifactsCard';
+import Lottie from 'lottie-react';
 
 const AllArtifacts = () => {
     const artifacts = useLoaderData();

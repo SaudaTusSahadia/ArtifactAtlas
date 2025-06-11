@@ -2,6 +2,8 @@ import React, { use } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import { motion } from 'framer-motion';
 import { Mail, UserRound } from 'lucide-react';
+import  animation  from '../assets/unknownUser.json'
+import Lottie from 'lottie-react';
 
 const MyProfile = () => {
   const { user } = use(AuthContext);

@@ -131,8 +131,8 @@ const Navbar = () => {
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                     <img
-                                        alt={user.displayName || user.email}
                                         src={user.photoURL || userimg}
+                                        alt={user.displayName || user.email}
                                     />
                                 </div>
                             </div>
@@ -144,8 +144,8 @@ const Navbar = () => {
                                     <div className="avatar">
                                         <div className="w-8 rounded-full">
                                             <img
-                                                alt={user.displayName || user.email}
                                                 src={user.photoURL || userimg}
+                                                alt={user.displayName || user.email}
                                             />
                                         </div>
                                     </div>

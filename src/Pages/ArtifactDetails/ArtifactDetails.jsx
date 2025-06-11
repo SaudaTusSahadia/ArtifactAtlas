@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { motion } from 'framer-motion';
 import { Heart, MapPin, CalendarClock, UserSearch } from 'lucide-react';
+import { AuthContext } from '../../Context/AuthContext';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 const ArtifactDetails = () => {
     const {
+        _id,
         artifactName,
         artifactImage,
         artifactType,
@@ -15,6 +19,47 @@ const ArtifactDetails = () => {
         discoveredBy,
         presentLocation
     } = useLoaderData();
+
+    const { user } = use(AuthContext)
+    const [liked, setLiked] = useState(true)
+
+    useEffect(() => {
+        if (user?.email && _id) {
+            fetch(`https://assignment11-server-one-gules.vercel.app/likes?liker=${user.email}&artifactId=${_id}`)
+                .then((res) => res.json())
+                .then((data) => setLiked(data.liked));
+        }
+    }, [user?.email, _id])
+
+    const handleLike = () => {
+        // console.log(like);
+        axios.post('https://assignment11-server-one-gules.vercel.app/likes',{
+        // axios.post('http://localhost:3000/likes', {
+            artifactId: _id,
+            liker: user.email
+        })
+
+            .then(res => {
+                console.log(res.data.insertedId)
+                if (res.data.insertedId) {
+                    setLiked(true)
+                    toast.info('You liked this artifact', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        // transition: Bounce,
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     return (
         <motion.div
@@ -27,8 +72,8 @@ const ArtifactDetails = () => {
             <div className="hero-content flex-col lg:flex-row-reverse gap-10 max-w-6xl w-full">
                 <motion.div
                     initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0}}
-                    transition={{ delay: 0.5}}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 }}
                 >
                     <img
                         src={artifactImage}
@@ -44,14 +89,14 @@ const ArtifactDetails = () => {
                         Type: {artifactType}
                     </h2>
                     <p className="text-gray-500">{historicalContext}</p>
-                    <motion.p 
-                    animate={
+                    <motion.p
+                        animate={
                             {
                                 color: ['#ff5733', '#fffc33', '#6eff33', '#33ffdd', '#3358ff', '#ff33ff', '#ff333f', '#ff8c33', '#33ff8c', '#8c33ff'],
                                 transition: { duration: 6, repeat: Infinity }
                             }
                         }
-                    className="text-gray-600 italic">{shortDescription}</motion.p>
+                        className="text-gray-600 italic">{shortDescription}</motion.p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                         <div className="flex items-center gap-2">
@@ -73,15 +118,42 @@ const ArtifactDetails = () => {
                     </div>
 
                     <div className="flex gap-4 mt-8">
-                        <motion.button 
-                        className="btn btn-outline btn-primary flex items-center gap-2"
-                        whileHover={{ scale: 1.05 }}
-                        >
-                            <Heart className="w-4 h-4" /> Like
-                        </motion.button>
+
+                        {
+                            liked ? (
+                                <button
+                                    className="btn btn-outline flex items-center gap-2"
+                                    disabled
+                                >
+                                    <Heart className="w-4 h-4" /> Liked
+                                </button>
+                            ) : (
+                                <motion.button
+                                    onClick={handleLike}
+                                    className="btn btn-outline text-red-600 flex items-center gap-2"
+                                    whileHover={{ scale: 1.05 }}
+                                >
+                                    <Heart color='red' className="w-4 h-4" /> Like
+                                </motion.button>
+                            )
+                        }
+
                         <button className="btn btn-secondary">Total Likes</button>
                     </div>
                 </div>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                // transition={Bounce}
+                />
             </div>
         </motion.div>
     );
