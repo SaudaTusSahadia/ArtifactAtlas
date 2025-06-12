@@ -4,14 +4,14 @@ import { Heart, Eye } from 'lucide-react';
 import { Link } from 'react-router';
 
 const ArtifactsCard = ({ artifact }) => {
-  const { artifactImage, artifactName, shortDescription } = artifact;
+  const { artifactImage, artifactName, shortDescription, likedBy } = artifact;
 
   return (
     <motion.div
       className="card bg-base-200 shadow-xl rounded-2xl overflow-hidden w-96"
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 1.5 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1}}
+      transition={{ duration: 1 }}
     >
       <figure>
         <img
@@ -24,14 +24,15 @@ const ArtifactsCard = ({ artifact }) => {
         <h2 className="card-title text-xl font-bold text-primary">{artifactName}</h2>
         <p className="text-sm text-gray-500">{shortDescription}</p>
         <div className="card-actions flex justify-between items-center mt-4">
-          <button className="flex items-center gap-1 text-red-500 hover:text-red-600 transition">
-            <Heart className="w-5 h-5" /> Like
-          </button>
+          <p className="flex items-center gap-1 text-red-500 hover:text-red-600 transition">
+            <span className="font-medium">{likedBy.length}</span>
+            <span className="text-sm">{likedBy.length === 1 ? 'Like' : 'Likes'}</span>
+          </p>
           <Link to={`/artifactDetails/${artifact._id}`}>
-          <button className="btn btn-sm bg-primary font-semibold hover:bg-blue-700 transition rounded-lg flex items-center gap-2">
-            <Eye className="w-4 h-4" />
-            View Details
-          </button>
+            <button className="btn btn-sm bg-primary font-semibold hover:bg-blue-700 transition rounded-lg flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              View Details
+            </button>
           </Link>
         </div>
       </div>
