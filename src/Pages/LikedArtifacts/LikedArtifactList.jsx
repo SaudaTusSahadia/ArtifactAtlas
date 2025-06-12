@@ -8,9 +8,8 @@ import { Suspense } from 'react';
 import Loading from '../Shared/Loading';
 
 const LikedArtifactList = ({ likedArtifactPromise }) => {
-    const response = use(likedArtifactPromise);
-    const likes = response?.likes || [];
-    console.log(likes);
+    const likes = use(likedArtifactPromise);
+    console.log(likes)
     
 
 

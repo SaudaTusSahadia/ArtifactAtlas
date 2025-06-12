@@ -10,6 +10,7 @@ const LikedArtifacts = () => {
 
     return (
         <div>
+            <title>Liked Artifact | ArtifactAtlas</title>
             <Suspense fallback={<Loading />}>
                 <LikedArtifactList
                 likedArtifactPromise={likedArtifactPromise(user.email)}

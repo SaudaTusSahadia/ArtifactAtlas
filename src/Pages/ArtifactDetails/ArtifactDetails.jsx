@@ -47,32 +47,37 @@ const ArtifactDetails = () => {
                 theme: "colored",
                 // transition: Bounce,
             });
-        // console.log(like);
-        // axios.post('https://assignment11-server-one-gules.vercel.app/likes', {
-        // axios.post('http://localhost:3000/likes', {
-        //     artifactId: _id,
-        //     liker: user.email
+            
+            const like = {
+                artifactId: _id,
+                liker: user.email
+            }
+            console.log(like);
+            
+        axios.post('https://assignment11-server-one-gules.vercel.app/likes',like)
+        // axios.post('http://localhost:3000/likes',like)
+            
         // })
-        //     .then(res => {
-        //         console.log(res.data.insertedId)
-        //         if (res.data.insertedId) {
+            .then(res => {
+                console.log(res.data.insertedId)
+                if (res.data.insertedId) {
         //             setLiked(true)
-        //             toast.info('You liked this artifact', {
-        //                 position: "top-center",
-        //                 autoClose: 5000,
-        //                 hideProgressBar: false,
-        //                 closeOnClick: false,
-        //                 pauseOnHover: true,
-        //                 draggable: true,
-        //                 progress: undefined,
-        //                 theme: "colored",
-        //                 // transition: Bounce,
-        //             });
-        //         }
-        //     })
-        // .catch(error => {
-        //     console.log(error)
-        // })
+                    toast.info('You liked this artifact', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        // transition: Bounce,
+                    });
+                }
+            })
+        .catch(error => {
+            console.log(error)
+        });
 
 
         axios.patch(`https://assignment11-server-one-gules.vercel.app/like/${_id}`, {
