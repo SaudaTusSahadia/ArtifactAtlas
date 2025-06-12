@@ -29,8 +29,8 @@ const ArtifactDetails = () => {
 
 
     useEffect(() => {
-        setLiked(likedBy.includes(user?.email))        
-        
+        setLiked(likedBy.includes(user?.email))
+
     }, [likedBy, user])
 
     //like or dislike handler
@@ -47,38 +47,6 @@ const ArtifactDetails = () => {
                 theme: "colored",
                 // transition: Bounce,
             });
-            
-            const like = {
-                artifactId: _id,
-                liker: user.email
-            }
-            console.log(like);
-            
-        axios.post('https://assignment11-server-one-gules.vercel.app/likes',like)
-        // axios.post('http://localhost:3000/likes',like)
-            
-        // })
-            .then(res => {
-                console.log(res.data.insertedId)
-                if (res.data.insertedId) {
-        //             setLiked(true)
-                    toast.info('You liked this artifact', {
-                        position: "top-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        // transition: Bounce,
-                    });
-                }
-            })
-        .catch(error => {
-            console.log(error)
-        });
-
 
         axios.patch(`https://assignment11-server-one-gules.vercel.app/like/${_id}`, {
             email: user?.email,
@@ -90,12 +58,73 @@ const ArtifactDetails = () => {
                 setLiked(isLiked)
 
                 //update likecount
-                setLikeCount(prev => (isLiked ? 
+                setLikeCount(prev => (isLiked ?
                     (prev + 1) : (prev - 1)))
             })
             .catch(error => {
                 console.log(error)
             })
+
+        const like = {
+            artifactId: _id,
+            liker: user.email
+        }
+        console.log(like);
+
+
+        if (!liked) {
+            axios.post('https://assignment11-server-one-gules.vercel.app/likes', like)
+
+                // axios.post('http://localhost:3000/likes',like)
+
+                .then(res => {
+                    console.log(res.data.insertedId)
+                    if (res.data.insertedId) {
+                        // setLiked(true)
+                        toast.info('You liked this artifact', {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: false,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                            // transition: Bounce,
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        }
+        else {
+            fetch(`https://assignment11-server-one-gules.vercel.app/like?artifactId=${_id}&email=${user?.email}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount) {
+                        toast.warn('You unliked this artifact', {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: false,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                            // transition: Bounce,
+                        });
+
+                        //remove artifact
+                        const remainingArtifact = liked.filter(art => art.id !== _id)
+                        setLiked(remainingArtifact);
+                    }
+                })
+        }
+
+
     }
 
     return (

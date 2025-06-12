@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { Link } from 'react-router';
 import animation from '../../assets/unknownUser.json'
 import Lottie from 'lottie-react';
@@ -11,8 +11,6 @@ const LikedArtifactList = ({ likedArtifactPromise }) => {
     const likes = use(likedArtifactPromise);
     console.log(likes)
     
-
-
     return (
         <div className="p-4 mx-auto">
             <motion.div
