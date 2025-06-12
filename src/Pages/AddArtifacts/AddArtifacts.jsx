@@ -14,6 +14,9 @@ const AddArtifacts = () => {
         const data = Object.fromEntries(formdata.entries());
         const { name, email, ...newArtifact } = data;
         newArtifact.artifactAdder = { name, email };
+        newArtifact.email = user?.email;
+        newArtifact.name = user?.displayName;
+        newArtifact.likedBy = [];
         console.log(newArtifact);
 
         //save artifact to the database

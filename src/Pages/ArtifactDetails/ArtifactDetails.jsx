@@ -17,44 +17,76 @@ const ArtifactDetails = () => {
         createdAt,
         discoveredAt,
         discoveredBy,
-        presentLocation
+        presentLocation,
+        artifactAdder,
+        likedBy
     } = useLoaderData();
 
     const { user } = use(AuthContext)
-    const [liked, setLiked] = useState(true)
+    const [liked, setLiked] = useState(likedBy.includes(false))
+    const [likeCount, setLikeCount] = useState(likedBy.length)
+    console.log('is liked? ', liked);
+
 
     useEffect(() => {
-        if (user?.email && _id) {
-            fetch(`https://assignment11-server-one-gules.vercel.app/likes?liker=${user.email}&artifactId=${_id}`)
-                .then((res) => res.json())
-                .then((data) => setLiked(data.liked));
-        }
-    }, [user?.email, _id])
+        setLiked(likedBy.includes(user?.email))        
+        
+    }, [likedBy, user])
 
+    //like or dislike handler
     const handleLike = () => {
+        if (user?.email === artifactAdder.email)
+            return toast.error('You can not like on your own post', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                // transition: Bounce,
+            });
         // console.log(like);
-        axios.post('https://assignment11-server-one-gules.vercel.app/likes',{
+        // axios.post('https://assignment11-server-one-gules.vercel.app/likes', {
         // axios.post('http://localhost:3000/likes', {
-            artifactId: _id,
-            liker: user.email
-        })
+        //     artifactId: _id,
+        //     liker: user.email
+        // })
+        //     .then(res => {
+        //         console.log(res.data.insertedId)
+        //         if (res.data.insertedId) {
+        //             setLiked(true)
+        //             toast.info('You liked this artifact', {
+        //                 position: "top-center",
+        //                 autoClose: 5000,
+        //                 hideProgressBar: false,
+        //                 closeOnClick: false,
+        //                 pauseOnHover: true,
+        //                 draggable: true,
+        //                 progress: undefined,
+        //                 theme: "colored",
+        //                 // transition: Bounce,
+        //             });
+        //         }
+        //     })
+        // .catch(error => {
+        //     console.log(error)
+        // })
 
-            .then(res => {
-                console.log(res.data.insertedId)
-                if (res.data.insertedId) {
-                    setLiked(true)
-                    toast.info('You liked this artifact', {
-                        position: "top-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        // transition: Bounce,
-                    });
-                }
+
+        axios.patch(`https://assignment11-server-one-gules.vercel.app/like/${_id}`, {
+            email: user?.email,
+        })
+            .then(data => {
+                console.log(data?.data)
+                const isLiked = (data?.data?.liked)
+                //update like state
+                setLiked(isLiked)
+
+                //update likecount
+                setLikeCount(prev => (isLiked ? 
+                    (prev + 1) : (prev - 1)))
             })
             .catch(error => {
                 console.log(error)
@@ -119,26 +151,27 @@ const ArtifactDetails = () => {
 
                     <div className="flex gap-4 mt-8">
 
-                        {
-                            liked ? (
-                                <button
-                                    className="btn btn-outline flex items-center gap-2"
-                                    disabled
-                                >
-                                    <Heart className="w-4 h-4" /> Liked
-                                </button>
-                            ) : (
-                                <motion.button
-                                    onClick={handleLike}
-                                    className="btn btn-outline text-red-600 flex items-center gap-2"
-                                    whileHover={{ scale: 1.05 }}
-                                >
-                                    <Heart color='red' className="w-4 h-4" /> Like
-                                </motion.button>
-                            )
-                        }
+                        <button onClick={handleLike}>
+                            {
+                                liked ? (
+                                    <button
+                                        className="btn btn-outline flex items-center gap-2"
+                                    >
+                                        <Heart className="w-4 h-4" /> Liked
+                                    </button>
+                                ) : (
+                                    <motion.button
 
-                        <button className="btn btn-secondary">Total Likes</button>
+                                        className="btn btn-outline text-red-600 flex items-center gap-2"
+                                        whileHover={{ scale: 1.05 }}
+                                    >
+                                        <Heart color='red' className="w-4 h-4" /> Like
+                                    </motion.button>
+                                )
+                            }
+                        </button>
+
+                        <button className="btn btn-secondary">{likeCount} People Liked this Artifact</button>
                     </div>
                 </div>
                 <ToastContainer
