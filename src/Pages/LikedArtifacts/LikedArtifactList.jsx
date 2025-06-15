@@ -12,7 +12,7 @@ const LikedArtifactList = ({ likedArtifactPromise }) => {
     console.log(likes)
     
     return (
-        <div className="p-4 mx-auto">
+        <div className="p-4 mx-auto min-h-screen">
             <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1, duration: 1 }}

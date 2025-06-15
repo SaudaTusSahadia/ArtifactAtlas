@@ -20,6 +20,8 @@ import TermsOfServices from "../components/TermsOfServices";
 import FAQ from "../components/FAQ";
 import MyProfile from "../components/MyProfile";
 import ContactUs from "../components/ContactUs";
+import ErrorPage from "../components/ErrorPage";
+
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/allArtifacts",
-        loader: () => fetch('https://assignment11-server-one-gules.vercel.app/artifacts'),
+        // loader: () => fetch('https://assignment11-server-one-gules.vercel.app/artifacts'),
         Component: AllArtifacts
       },
       {
@@ -100,6 +102,10 @@ const router = createBrowserRouter([
         Component: ForgetPassword
       }
     ]
+  },
+  {
+    path: "/*",
+    Component: ErrorPage
   }
 ]);
 

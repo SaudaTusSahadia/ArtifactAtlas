@@ -9,7 +9,7 @@ const MyArtifacts = () => {
     const { user } = use(AuthContext);
 
     return (
-        <div>
+        <div className='min-h-screen'>
             <title>MY Artifacts | ArtifactAtlas</title>
             <Suspense fallback={<Loading></Loading>}>
                 <ArtifactsList 

@@ -50,10 +50,10 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-2">
-      <h1 className="text-2xl md:text-3xl font-extrabold text-primary mb-6 text-center">
+      {/* <h1 className="text-2xl md:text-3xl font-extrabold text-primary mb-6 text-center">
         Artifacts Posted By You:{' '}
         <span className="text-secondary">{artiFacts.length}</span>
-      </h1>
+      </h1> */}
 
       {artiFacts.length === 0 ? (
         <div className="text-center py-20 text-gray-500 space-y-4">
@@ -103,7 +103,7 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
                   <td>
                     <Link to={`/updateArtifact/${art._id}`}>
                     <button className="btn btn-sm btn-outline btn-primary flex items-center gap-2">
-                      <FaEdit /> Edit
+                      <FaEdit />  Update
                     </button>
                     </Link>
                   </td>
