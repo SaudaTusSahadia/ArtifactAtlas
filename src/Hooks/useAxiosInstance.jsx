@@ -5,7 +5,7 @@ import useAuth from './UseAuth';
 
 
 const AxiosInstance=axios.create({
-    baseURL:"http://localhost:3000/"
+    baseURL:"https://assignment11-server-one-gules.vercel.app"
 })
 const useAxiosInstance = () => {
 

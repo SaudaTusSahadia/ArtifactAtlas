@@ -8,7 +8,7 @@ import Loading from '../Shared/Loading';
 
 const Home = () => {
 
-    const featuredArtifactsPromise = fetch('https://assignment11-server-one-gules.vercel.app/artifacts').then(res => res.json());
+    const featuredArtifactsPromise = fetch('https://assignment11-server-one-gules.vercel.app/homeArtifacts').then(res => res.json());
 
     return (
         <div>
