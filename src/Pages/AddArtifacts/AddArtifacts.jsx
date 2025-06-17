@@ -154,13 +154,12 @@ const AddArtifacts = () => {
               <label className="label font-medium text-secondary">
                 Discovered At (Exact Date)
               </label>
-            <ThemeProvider theme={datePickerTheme} >
-              <Datepicker
+              <input
                 name="discoveredAt"
                  className="input input-bordered w-full mb-2" 
+                 placeholder=" e.g. 1799"
                 required={true}
               />
-            </ThemeProvider>
 
               <label className="label font-medium text-secondary">
                 Discovered By

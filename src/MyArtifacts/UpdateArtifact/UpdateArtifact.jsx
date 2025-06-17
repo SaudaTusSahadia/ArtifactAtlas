@@ -10,11 +10,11 @@ import { SuccessAlert } from "../../Utilities/AlertMaker";
 
 const UpdateArtifact = () => {
   const { user } = useAuth();
-  const {id}=useParams();
-  const {getArtifactDetails,updateArtifacts}=useApi();
+  const { id } = useParams();
+  const { getArtifactDetails, updateArtifacts } = useApi();
   const [fetchLoader, setFetchLoader] = useState(false);
-  const [data,setData]=useState([]);
-    const datePickerTheme = createTheme({
+  const [data, setData] = useState([]);
+  const datePickerTheme = createTheme({
     root: {
       base: "flex w-full max-w-xs items-center rounded-lg  p-10",
       closed: "opacity-0 ease-out",
@@ -54,7 +54,7 @@ const UpdateArtifact = () => {
     newArtifact.artifactAdder = { name, email };
     console.log(updatedArtifactData);
 
-   updateArtifacts(user.email,id,newArtifact)
+    updateArtifacts(user.email, id, newArtifact)
       .then((data) => {
         console.log(data);
         if (data.modifiedCount) {
@@ -179,15 +179,13 @@ const UpdateArtifact = () => {
             <label className="label font-medium text-secondary">
               Discovered At (Exact Date)
             </label>
-            <ThemeProvider theme={datePickerTheme}>
-              <Datepicker
-                name="discoveredAt"
-                className="input input-bordered w-full mb-2"
-                required={true}
-                defaultValue={discoveredDate}
-                onSelectedDateChanged={setDiscoveredDate}
-              />
-            </ThemeProvider>
+            <input
+              name="discoveredAt"
+              className="input input-bordered w-full mb-2"
+              required={true}
+              defaultValue={data.discoveredAt}
+            />
+
 
             <label className="label font-medium text-secondary">
               Discovered By
