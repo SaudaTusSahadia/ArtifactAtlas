@@ -2,18 +2,19 @@ import React, { Suspense, use } from 'react';
 import LikedArtifactList from './LikedArtifactList';
 import Loading from '../Shared/Loading'
 import { AuthContext } from '../../Context/AuthContext';
-import { likedArtifactPromise } from '../../api/likesApi';
+import useApi from '../../api/useApi';
 
 const LikedArtifacts = () => {
 
     const {user} = use(AuthContext)
+    const {getLikedArfifacts}=useApi();
 
     return (
         <div>
             <title>Liked Artifact | ArtifactAtlas</title>
             <Suspense fallback={<Loading />}>
                 <LikedArtifactList
-                likedArtifactPromise={likedArtifactPromise(user.email)}
+                likedArtifactPromise={getLikedArfifacts(user.email)}
                 ></LikedArtifactList>
             </Suspense>
         </div>

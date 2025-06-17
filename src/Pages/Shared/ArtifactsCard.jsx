@@ -9,7 +9,7 @@ const ArtifactsCard = ({ artifact }) => {
   return (
     <motion.div
       className="card bg-base-200 shadow-xl rounded-2xl overflow-hidden w-96"
-      initial={{ opacity: 0, scale: 1.5 }}
+      initial={{ opacity: 0, scale: 2 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1 }}
     >
@@ -29,10 +29,10 @@ const ArtifactsCard = ({ artifact }) => {
             <span className="text-sm">{likedBy.length === 1 ? 'Like' : 'Likes'}</span>
           </p>
           <Link to={`/artifactDetails/${artifact._id}`}>
-            <button className="btn btn-sm bg-primary font-semibold hover:bg-blue-700 transition rounded-lg flex items-center gap-2">
-              <Eye className="w-4 h-4" />
-              View Details
-            </button>
+            <button className="btn btn-sm font-semibold bg-gradient-to-r from-primary to-accent hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transition-all duration-300 ease-in-out rounded-lg flex items-center gap-2 transform hover:scale-105 shadow-md">
+  <Eye className="w-4 h-4" />
+  View Details
+</button>
           </Link>
         </div>
       </div>

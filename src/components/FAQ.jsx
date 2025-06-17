@@ -19,7 +19,7 @@ const faqData = [
   {
     question: "Can I edit or delete my uploaded artifacts?",
     answer:
-      "Yes, users can update or delete any artifact they have uploaded by visiting their profile or dashboard.",
+      "Yes, users can update or delete any artifact they have uploaded by visiting their profile.",
   },
   {
     question: "How do I report an incorrect or offensive artifact?",
@@ -29,7 +29,7 @@ const faqData = [
   {
     question: "Is ArtifactAtlas free to use?",
     answer:
-      "Yes, ArtifactAtlas is completely free for all users. You can explore artifacts without registering, but an account is required for uploads or interaction.",
+      "Yes, ArtifactAtlas is completely free for all users. But an account is required for uploads or interaction.",
   },
 ];
 

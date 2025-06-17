@@ -1,15 +1,21 @@
 import React, { use, useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import { Inbox } from 'lucide-react'; // Optional: for an icon
+import { Inbox } from 'lucide-react';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import { CgDetailsMore } from 'react-icons/cg';
+import useAuth from '../../Hooks/UseAuth';
+import useApi from '../../api/useApi';
 
-const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
+const ArtifactsList = ({ myCreatedArtifacts }) => {
 
-  const artifacts = use(ArtifactsCreatedByPromise);
+  console.log(myCreatedArtifacts)
+  const artifacts = use(myCreatedArtifacts);
+  const { user } = useAuth();
+  const { deleteMyCreatedArtifacts } = useApi();
 
-  const [ artiFacts, setArtiFacts ] = useState(artifacts);
+  const [artiFacts, setArtiFacts] = useState(artifacts);
+  console.log(myCreatedArtifacts);
 
   const handleDelete = (id) => {
     console.log(id);
@@ -23,23 +29,14 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-
-
-        // start delete operation
-        fetch(`https://assignment11-server-one-gules.vercel.app/artifacts/${id}`, {
-          method: 'DELETE',
-        })
-          .then(res => res.json())
+        deleteMyCreatedArtifacts(user.email, id)
           .then(data => {
-
             if (data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",
                 text: "Your artifact has been deleted.",
                 icon: "success"
               });
-
-              //remove artifacts from the state
               const remainingArtifacts = artiFacts.filter(art => art._id !== id)
               setArtiFacts(remainingArtifacts);
             }
@@ -50,11 +47,6 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-2">
-      {/* <h1 className="text-2xl md:text-3xl font-extrabold text-primary mb-6 text-center">
-        Artifacts Posted By You:{' '}
-        <span className="text-secondary">{artiFacts.length}</span>
-      </h1> */}
-
       {artiFacts.length === 0 ? (
         <div className="text-center py-20 text-gray-500 space-y-4">
           <Inbox className="mx-auto h-16 w-16 text-primary" />
@@ -102,9 +94,9 @@ const ArtifactsList = ({ ArtifactsCreatedByPromise }) => {
                   </td>
                   <td>
                     <Link to={`/updateArtifact/${art._id}`}>
-                    <button className="btn btn-sm btn-outline btn-primary flex items-center gap-2">
-                      <FaEdit />  Update
-                    </button>
+                      <button className="btn btn-sm btn-outline btn-primary flex items-center gap-2">
+                        <FaEdit />  Update
+                      </button>
                     </Link>
                   </td>
                   <td>

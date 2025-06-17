@@ -3,26 +3,30 @@ import ArtifactsCard from "../Shared/ArtifactsCard";
 import Lottie from "lottie-react";
 import Loading from "../Shared/Loading";
 import { FaSearch } from "react-icons/fa";
+import useApi from "../../api/useApi";
+import useAuth from "../../Hooks/UseAuth";
 
 const AllArtifacts = () => {
   const [artifacts, setArtifacts] = useState([]);
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const { getSearchedArtifacts } = useApi();
+  const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    // let url = 'https://assignment11-server-one-gules.vercel.app/artifacts';
-    let url = "http://localhost:3000/artifacts";
-    if (search.trim()) {
-      url += `?search=${encodeURIComponent(search.trim())}`;
+    if (user?.email) {
+      setLoading(true);
+      let url = "/artifacts";
+      if (search.trim()) {
+        url += `?search=${encodeURIComponent(search.trim())}`;
+      }
+      getSearchedArtifacts(user.email, url)
+        .then((data) => setArtifacts(data))
+        .finally(() => setLoading(false));
     }
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setArtifacts(data))
-      .finally(() => setLoading(false));
-  }, [search]);
+  }, [search, user?.email]);
 
   if (loading) {
     return <Loading></Loading>;
@@ -44,23 +48,24 @@ const AllArtifacts = () => {
           </div>
 
           {/* search field  */}
-          <div className="mt-6 flex justify-end">
-            <input
-  type="text"
-  className="input input-bordered w-full max-w-1/3"
-  placeholder="Search by Artifact Name..."
-  value={searchInput}
-  name="search"
-  onChange={e => setSearchInput(e.target.value)}
-/>
-<button
-  className="btn btn-primary ml-2"
-  onClick={() => setSearch(searchInput)}
-  type="button"
->
-  <FaSearch />
-</button>
+          <div className="mt-8 flex justify-center">
+            <div className="flex w-full max-w-xl items-center bg-base-100 shadow-md rounded-lg overflow-hidden">
+              <input
+                type="text"
+                placeholder="Search by Artifact Name..."
+                className="input w-full border-none focus:outline-none focus:ring-0"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              <button
+                onClick={() => setSearch(searchInput)}
+                className="btn btn-primary rounded-none rounded-r-lg"
+              >
+                <FaSearch /> Search
+              </button>
+            </div>
           </div>
+
         </div>
         {loading ? (
           <Loading></Loading>

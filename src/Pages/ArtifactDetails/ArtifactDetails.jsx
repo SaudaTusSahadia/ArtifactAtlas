@@ -1,229 +1,175 @@
-import React, { use, useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router';
-import { motion } from 'framer-motion';
-import { Heart, MapPin, CalendarClock, UserSearch } from 'lucide-react';
-import { AuthContext } from '../../Context/AuthContext';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { use, useEffect, useState } from "react";
+import { useLoaderData, useParams } from "react-router";
+import { motion } from "framer-motion";
+import { Heart, MapPin, CalendarClock, UserSearch } from "lucide-react";
+import { AuthContext } from "../../Context/AuthContext";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import useAuth from "../../Hooks/UseAuth";
+import useApi from "../../api/useApi";
+import Loading from "../Shared/Loading";
+import { ErrorToast } from "../../Utilities/ToastMaker";
+import { SuccessAlert } from "../../Utilities/AlertMaker";
 
 const ArtifactDetails = () => {
-    const {
-        _id,
-        artifactName,
-        artifactImage,
-        artifactType,
-        historicalContext,
-        shortDescription,
-        createdAt,
-        discoveredAt,
-        discoveredBy,
-        presentLocation,
-        artifactAdder,
-        likedBy
-    } = useLoaderData();
+  const { user } = useAuth();
+  const { id } = useParams();
+  console.log(id);
 
-    const { user } = use(AuthContext)
-    const [liked, setLiked] = useState(likedBy.includes(false))
-    const [likeCount, setLikeCount] = useState(likedBy.length)
-    console.log('is liked? ', liked);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [data, setData] = useState({});
+  const { getArtifactDetails, patchArtifactsLike } = useApi();
+  const [fetchLoader, setFetchLoader] = useState(false);
 
-
-    useEffect(() => {
-        setLiked(likedBy.includes(user?.email))
-
-    }, [likedBy, user])
-
-    //like or dislike handler
-    const handleLike = () => {
-        if (user?.email === artifactAdder.email)
-            return toast.error('You can not like on your own post', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                // transition: Bounce,
-            });
-
-        axios.patch(`https://assignment11-server-one-gules.vercel.app/like/${_id}`, {
-            email: user?.email,
+  useEffect(() => {
+    if (user && id) {
+      setFetchLoader(true);
+      getArtifactDetails(user.email, id)
+        .then((res) => {
+          setData(res);
+          setLiked(res.likedBy.includes(user?.email));
+          setLikeCount(res.likedBy.length);
         })
-            .then(data => {
-                console.log(data?.data)
-                const isLiked = (data?.data?.liked)
-                //update like state
-                setLiked(isLiked)
-
-                //update likecount
-                setLikeCount(prev => (isLiked ?
-                    (prev + 1) : (prev - 1)))
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
-        const like = {
-            artifactId: _id,
-            liker: user.email
-        }
-        console.log(like);
-
-
-        if (!liked) {
-            axios.post('https://assignment11-server-one-gules.vercel.app/likes', like)
-
-                // axios.post('http://localhost:3000/likes',like)
-
-                .then(res => {
-                    console.log(res.data.insertedId)
-                    if (res.data.insertedId) {
-                        // setLiked(true)
-                        toast.info('You liked this artifact', {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: false,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "colored",
-                            // transition: Bounce,
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        }
-        else {
-            fetch(`https://assignment11-server-one-gules.vercel.app/like?artifactId=${_id}&email=${user?.email}`, {
-                method: 'DELETE'
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.deletedCount) {
-                        toast.warn('You unliked this artifact', {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: false,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "colored",
-                            // transition: Bounce,
-                        });
-
-                        //remove artifact
-                        const remainingArtifact = liked.filter(art => art.id !== _id)
-                        setLiked(remainingArtifact);
-                    }
-                })
-        }
-
-
+        .finally(() => {
+          setFetchLoader(false);
+        });
     }
+  }, [user, id]);
 
-    return (
+  //like or dislike handler
+  const handleLike = () => {
+    if (user?.email === data.artifactAdder.email)
+      return ErrorToast("You can not like on your own post");
+
+    patchArtifactsLike(user.email, data._id).then((data) => {
+      if (data.acknowledged) {
+        if (data.liked) {
+            setLiked(true);
+          setLikeCount(likeCount + 1);
+          SuccessAlert(
+            "❤️ You liked this artifact! Thanks for showing your appreciation!"
+          );
+        } else {
+             setLiked(false);
+          setLikeCount(likeCount - 1);
+          SuccessAlert(
+            "💔 You unliked this artifact. We hope you find others you love!"
+          );
+        }
+      }
+    });
+  };
+
+  if (fetchLoader) {
+    return <Loading></Loading>;
+  }
+
+  return (
+    <motion.div
+      className="min-h-screen bg-base-200 p-6 flex items-center justify-center"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <title>Artifact Details | ArtifactAtlas</title>
+      <div className="hero-content flex-col lg:flex-row-reverse gap-10 max-w-6xl w-full">
         <motion.div
-            className="min-h-screen bg-base-200 p-6 flex items-center justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5 }}
         >
-            <title>Artifact Details | ArtifactAtlas</title>
-            <div className="hero-content flex-col lg:flex-row-reverse gap-10 max-w-6xl w-full">
-                <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
-                >
-                    <img
-                        src={artifactImage}
-                        alt={artifactName}
-                        className="max-w-md w-full rounded-2xl shadow-2xl border-2 border-base-300"
-                    />
-                </motion.div>
-                <div className="space-y-6">
-                    <h1 className="text-4xl font-bold text-primary">
-                        {artifactName}
-                    </h1>
-                    <h2 className="text-xl font-semibold text-secondary">
-                        Type: {artifactType}
-                    </h2>
-                    <p className="text-gray-500">{historicalContext}</p>
-                    <motion.p
-                        animate={
-                            {
-                                color: ['#ff5733', '#fffc33', '#6eff33', '#33ffdd', '#3358ff', '#ff33ff', '#ff333f', '#ff8c33', '#33ff8c', '#8c33ff'],
-                                transition: { duration: 6, repeat: Infinity }
-                            }
-                        }
-                        className="text-gray-600 italic">{shortDescription}</motion.p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        <div className="flex items-center gap-2">
-                            <CalendarClock className="w-5 h-5 text-blue-600" />
-                            <span>Created At: {createdAt}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <CalendarClock className="w-5 h-5 text-green-600" />
-                            <span>Discovered At: {discoveredAt}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <UserSearch className="w-5 h-5 text-orange-600" />
-                            <span>Discovered By: {discoveredBy}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <MapPin className="w-5 h-5 text-purple-600" />
-                            <span>Location: {presentLocation}</span>
-                        </div>
-                    </div>
-
-                    <div className="flex gap-4 mt-8">
-
-                        <button onClick={handleLike}>
-                            {
-                                liked ? (
-                                    <button
-                                        className="btn btn-outline flex items-center gap-2"
-                                    >
-                                        <Heart className="w-4 h-4" /> Liked
-                                    </button>
-                                ) : (
-                                    <motion.button
-
-                                        className="btn btn-outline text-red-600 flex items-center gap-2"
-                                        whileHover={{ scale: 1.05 }}
-                                    >
-                                        <Heart color='red' className="w-4 h-4" /> Like
-                                    </motion.button>
-                                )
-                            }
-                        </button>
-
-                        <button className="btn btn-secondary">{likeCount} People Liked this Artifact</button>
-                    </div>
-                </div>
-                <ToastContainer
-                    position="top-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                // transition={Bounce}
-                />
-            </div>
+          <img
+            src={data.artifactImage}
+            alt={data.artifactName}
+            className="max-w-md w-full rounded-2xl shadow-2xl border-2 border-base-300"
+          />
         </motion.div>
-    );
+        <div className="space-y-6">
+          <h1 className="text-4xl font-bold text-primary">
+            {data.artifactName}
+          </h1>
+          <h2 className="text-xl font-semibold text-secondary">
+            Type: {data.artifactType}
+          </h2>
+          <p className="text-gray-500">{data.historicalContext}</p>
+          <motion.p
+            animate={{
+              color: [
+                "#ff5733",
+                "#fffc33",
+                "#6eff33",
+                "#33ffdd",
+                "#3358ff",
+                "#ff33ff",
+                "#ff333f",
+                "#ff8c33",
+                "#33ff8c",
+                "#8c33ff",
+              ],
+              transition: { duration: 6, repeat: Infinity },
+            }}
+            className="text-gray-600 italic"
+          >
+            {data.shortDescription}
+          </motion.p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="flex items-center gap-2">
+              <CalendarClock className="w-5 h-5 text-blue-600" />
+              <span>Created At: {data.createdAt}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CalendarClock className="w-5 h-5 text-green-600" />
+              <span>Discovered At: {data.discoveredAt}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <UserSearch className="w-5 h-5 text-orange-600" />
+              <span>Discovered By: {data.discoveredBy}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-purple-600" />
+              <span>Location: {data.presentLocation}</span>
+            </div>
+          </div>
+
+          <div className="flex gap-4 mt-8">
+            <button onClick={handleLike}>
+              {liked ? (
+                <button className="btn btn-outline flex items-center gap-2">
+                  <Heart className="w-4 h-4" /> Liked
+                </button>
+              ) : (
+                <motion.button
+                  className="btn btn-outline text-red-600 flex items-center gap-2"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Heart color="red" className="w-4 h-4" /> Like
+                </motion.button>
+              )}
+            </button>
+
+            <button className="btn btn-secondary">
+              {likeCount} People Liked this Artifact
+            </button>
+          </div>
+        </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          // transition={Bounce}
+        />
+      </div>
+    </motion.div>
+  );
 };
 
 export default ArtifactDetails;

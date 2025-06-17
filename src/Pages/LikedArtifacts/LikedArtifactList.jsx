@@ -57,7 +57,6 @@ const LikedArtifactList = ({ likedArtifactPromise }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* <Suspense fallback={<Loading />}> */}
                                 {likes.map((like, index) => (
                                     <tr key={like._id}>
                                         <th>{index + 1}</th>
@@ -85,14 +84,7 @@ const LikedArtifactList = ({ likedArtifactPromise }) => {
                                             </Link>
                                         </td>
                                     </tr>
-
-                                    // <LikedArtifactListRow
-                                    //     key={like._id}
-                                    //     index={index}
-                                    //     like={like}
-                                    // ></LikedArtifactListRow>
-                                ))}
-                                {/* </Suspense> */}
+                                    ))}
                             </tbody>
                         </table>
                     </motion.div>

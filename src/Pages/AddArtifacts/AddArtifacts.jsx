@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaPlusCircle } from "react-icons/fa";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { createTheme, Datepicker, ThemeProvider } from "flowbite-react";
+import useAuth from "../../Hooks/UseAuth";
+import useApi from "../../api/useApi";
+import { ErrorAlert, SuccessAlert } from "../../Utilities/AlertMaker";
 
 const AddArtifacts = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const {postAddedArtifacts}=useApi();
 
   const datePickerTheme = createTheme({
   "root": {
@@ -26,31 +29,16 @@ const AddArtifacts = () => {
     const data = Object.fromEntries(formdata.entries());
     const { name, email, ...newArtifact } = data;
     newArtifact.artifactAdder = { name, email };
-    newArtifact.email = user?.email;
-    newArtifact.name = user?.displayName;
     newArtifact.likedBy = [];
-    console.log(newArtifact);
 
-    //save artifact to the database
-    axios
-      .post(
-        "https://assignment11-server-one-gules.vercel.app/artifacts",
-        newArtifact
-      )
+    postAddedArtifacts(user.email,newArtifact)
       .then((res) => {
-        console.log(res);
-        if (res.data.insertedId) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your artifact has been added successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+        if (res.insertedId) {
+          SuccessAlert('Your artifact has been added successfully!')
         }
       })
       .catch((error) => {
-        console.log(error);
+        ErrorAlert(`❌ Error Occurred: ⚠️ ${error}`);
       });
   };
 

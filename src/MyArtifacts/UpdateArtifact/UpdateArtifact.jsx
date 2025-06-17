@@ -1,29 +1,20 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaEdit } from "react-icons/fa";
-import { useLoaderData } from "react-router";
+import { useParams } from "react-router";
 import Swal from "sweetalert2";
 import { createTheme, Datepicker, ThemeProvider } from "flowbite-react";
+import useApi from "../../api/useApi";
+import useAuth from "../../Hooks/UseAuth";
+import { SuccessAlert } from "../../Utilities/AlertMaker";
 
 const UpdateArtifact = () => {
-  const { user } = use(AuthContext);
-  const {
-    _id,
-    artifactName,
-    artifactImage,
-    artifactType,
-    historicalContext,
-    shortDescription,
-    createdAt,
-    discoveredAt,
-    discoveredBy,
-    presentLocation,
-  } = useLoaderData();
-  const [discoveredDate, setDiscoveredDate] = useState(
-    discoveredAt ? new Date(discoveredAt) : null
-  );
-
-  const datePickerTheme = createTheme({
+  const { user } = useAuth();
+  const {id}=useParams();
+  const {getArtifactDetails,updateArtifacts}=useApi();
+  const [fetchLoader, setFetchLoader] = useState(false);
+  const [data,setData]=useState([]);
+    const datePickerTheme = createTheme({
     root: {
       base: "flex w-full max-w-xs items-center rounded-lg  p-10",
       closed: "opacity-0 ease-out",
@@ -33,32 +24,41 @@ const UpdateArtifact = () => {
       icon: "h-10 w-10 shrink-0",
     },
   });
+
+  useEffect(() => {
+    if (user && id) {
+      setFetchLoader(true);
+      getArtifactDetails(user.email, id)
+        .then((res) => {
+          setData(res);
+        })
+        .finally(() => {
+          setFetchLoader(false);
+        });
+    }
+  }, [user, id]);
+
+
+
+  const [discoveredDate, setDiscoveredDate] = useState(
+    data?.discoveredAt ? new Date(data.discoveredAt) : null
+  );
+
+
   const handleUpdateArtifact = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const updatedArtifact = Object.fromEntries(formData.entries());
-    console.log(updatedArtifact);
+    const updatedArtifactData = Object.fromEntries(formData.entries());
+    const { name, email, ...newArtifact } = updatedArtifactData;
+    newArtifact.artifactAdder = { name, email };
+    console.log(updatedArtifactData);
 
-    //send updated artifact to the db
-    fetch(`https://assignment11-server-one-gules.vercel.app/artifacts/${_id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedArtifact),
-    })
-      .then((res) => res.json())
+   updateArtifacts(user.email,id,newArtifact)
       .then((data) => {
         console.log(data);
         if (data.modifiedCount) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Artifact updated successfully!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          SuccessAlert("Artifact updated successfully!");
         }
       });
   };
@@ -84,7 +84,7 @@ const UpdateArtifact = () => {
               type="text"
               className="input input-bordered w-full mb-2"
               placeholder="Enter Artifact Name"
-              defaultValue={artifactName}
+              defaultValue={data.artifactName}
               required
             />
 
@@ -96,7 +96,7 @@ const UpdateArtifact = () => {
               type="text"
               className="input input-bordered w-full mb-2"
               placeholder="Enter Artifact Photo URL"
-              defaultValue={artifactImage}
+              defaultValue={data.artifactImage}
               required
             />
 
@@ -107,7 +107,7 @@ const UpdateArtifact = () => {
               name="artifactType"
               className="select select-bordered w-full mb-2"
               required
-              defaultValue={artifactType}
+              defaultValue={data.artifactType}
             >
               <option value="" disabled>
                 Select Artifact Type
@@ -131,7 +131,7 @@ const UpdateArtifact = () => {
               name="historicalContext"
               className="textarea textarea-bordered w-full"
               placeholder="Enter Historical Context"
-              defaultValue={historicalContext}
+              defaultValue={data.historicalContext}
               required
             ></textarea>
           </fieldset>
@@ -148,7 +148,7 @@ const UpdateArtifact = () => {
               name="shortDescription"
               className="textarea textarea-bordered w-full"
               placeholder="Enter Short Description"
-              defaultValue={shortDescription}
+              defaultValue={data.shortDescription}
               required
             ></textarea>
           </fieldset>
@@ -166,7 +166,7 @@ const UpdateArtifact = () => {
               type="text"
               placeholder="e.g. 196 BC"
               className="input input-bordered w-full"
-              defaultValue={createdAt}
+              defaultValue={data.createdAt}
               required
             />
           </fieldset>
@@ -197,7 +197,7 @@ const UpdateArtifact = () => {
               type="text"
               className="input input-bordered w-full"
               placeholder="Enter Discoverer's Name"
-              defaultValue={discoveredBy}
+              defaultValue={data.discoveredBy}
               required
             />
           </fieldset>
@@ -215,7 +215,7 @@ const UpdateArtifact = () => {
               type="text"
               className="input input-bordered w-full"
               placeholder="Enter Current Location"
-              defaultValue={presentLocation}
+              defaultValue={data.presentLocation}
               required
             />
           </fieldset>

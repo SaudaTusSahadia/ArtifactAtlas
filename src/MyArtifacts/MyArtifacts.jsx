@@ -2,18 +2,19 @@ import React, { Suspense, use } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import ArtifactsList from './ArtifactsList/ArtifactsList';
 import Loading from '../Pages/Shared/Loading';
-import { ArtifactsCreatedByPromise } from '../api/artifactsApi';
+import useApi from '../api/useApi';
 
 const MyArtifacts = () => {
 
     const { user } = use(AuthContext);
+    const {getMyCreatedArtifacts}=useApi();
 
     return (
         <div className='min-h-screen'>
             <title>MY Artifacts | ArtifactAtlas</title>
             <Suspense fallback={<Loading></Loading>}>
                 <ArtifactsList 
-                ArtifactsCreatedByPromise={ArtifactsCreatedByPromise(user.email)}
+                myCreatedArtifacts={getMyCreatedArtifacts(user.email)}
                 ></ArtifactsList>
             </Suspense>
         </div>
