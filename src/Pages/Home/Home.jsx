@@ -12,7 +12,6 @@ const Home = () => {
 
     return (
         <div>
-            <title>Home | ArtifactAtlas</title>
             <Slider></Slider>
             <div className='max-w-8xl mx-auto'>
                 <Extrasection1></Extrasection1>

@@ -16,16 +16,16 @@ const AllArtifacts = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user?.email) {
+
       setLoading(true);
-      let url = "/artifacts";
+      let url = "/allArtifacts";
       if (search.trim()) {
         url += `?search=${encodeURIComponent(search.trim())}`;
       }
-      getSearchedArtifacts(user.email, url)
+      getSearchedArtifacts( url)
         .then((data) => setArtifacts(data))
         .finally(() => setLoading(false));
-    }
+    
   }, [search, user?.email]);
 
   if (loading) {

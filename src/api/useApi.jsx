@@ -32,9 +32,10 @@ const postAddedArtifacts = (email,data) => {
         return axiosSecure.put(`/artifacts/${id}?email=${email}`,data).then(res => res.data);
   }
 
-const getSearchedArtifacts = (email, url) => {
-  const connector = url.includes('?') ? '&' : '?';
-  return axiosSecure.get(`${url}${connector}email=${email}&ok='false'`).then(res => res.data);
+const getSearchedArtifacts = ( url) => {
+  // const connector = url.includes('?') ? '&' : '?';
+  console.log(url);
+  return axiosSecure.get(`${url}`).then(res => res.data);
 }
   
 

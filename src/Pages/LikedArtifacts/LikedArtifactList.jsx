@@ -6,18 +6,26 @@ import { motion } from 'framer-motion'
 import LikedArtifactListRow from './LikedArtifactListRow';
 import { Suspense } from 'react';
 import Loading from '../Shared/Loading';
+import { BiSolidDetail } from "react-icons/bi";
+import { SiArtifacthub } from "react-icons/si";
+import { MdOutlineDescription } from "react-icons/md";
+import { IoLocationOutline } from "react-icons/io5";
+import { MdCreateNewFolder } from "react-icons/md";
+import { RiCompassDiscoverLine } from "react-icons/ri";
+import { FaPersonDigging } from "react-icons/fa6";
+import { BiDetail } from "react-icons/bi";
 
 const LikedArtifactList = ({ likedArtifactPromise }) => {
     const likes = use(likedArtifactPromise);
     console.log(likes)
     
     return (
-        <div className="p-4 mx-auto min-h-screen">
+        <div className="p-4 mx-auto min-h-screen bg-gradient-to-l from-base-200 via-base-100 to-base-300">
             <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1, duration: 1 }}
                 transition={{ duration: 2 }}
-                className='flex justify-center items-center md:mt-15 md:mb-5'>
+                className='flex justify-center items-center md:mt-15 md:mb-5 '>
                 <h1 className="text-xl md:text-2xl font-semibold mb-4">
                     You liked <motion.span
                         animate={
@@ -42,28 +50,28 @@ const LikedArtifactList = ({ likedArtifactPromise }) => {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1, duration: 1 }}
                         transition={{ duration: 2 }}
-                        className="overflow-x-auto hidden md:block md:mb-15 border-2 border-primary rounded-2xl">
+                        className="overflow-x-auto hidden md:block md:mb-15 border-2 border-primary rounded-2xl bg-base-200">
                         <table className="table table-zebra w-full">
                             <thead className="bg-base-200">
                                 <tr>
                                     <th>#</th>
-                                    <th>Artifact Name</th>
-                                    <th>Description</th>
-                                    <th>Present Location</th>
-                                    <th>Created At</th>
-                                    <th>Discovered At</th>
-                                    <th>Discovered By</th>
-                                    <th>Details</th>
+                                    <th><SiArtifacthub />Artifacts</th>
+                                    <th><MdOutlineDescription />Description</th>
+                                    <th><IoLocationOutline />Present Location</th>
+                                    <th><MdCreateNewFolder />Created At</th>
+                                    <th><RiCompassDiscoverLine />Discovered At</th>
+                                    <th><FaPersonDigging />Discovered By</th>
+                                    <th><BiDetail />Details</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {likes.map((like, index) => (
-                                    <tr key={like._id}>
+                                    <tr key={like._id} className='hover:bg-base-100'>
                                         <th>{index + 1}</th>
                                         <td>
                                             <div className="flex items-center gap-3">
                                                 <div className="avatar">
-                                                    <div className="mask mask-squircle h-12 w-12">
+                                                    <div className="mask mask-squircle h-20 w-20">
                                                         <img src={like.artifactImage} alt={like.artifactName} />
                                                     </div>
                                                 </div>
@@ -79,8 +87,8 @@ const LikedArtifactList = ({ likedArtifactPromise }) => {
                                         <td>{like.discoveredAt}</td>
                                         <td>{like.discoveredBy}</td>
                                         <td>
-                                            <Link to={`/artifactDetails/${like.artifactId}`}>
-                                                <button className="btn btn-outline btn-xs">Details</button>
+                                            <Link to={`/artifactDetails/${like._id}`}>
+                                                <button className="btn btn-outline text-primary"><BiSolidDetail/> Details</button>
                                             </Link>
                                         </td>
                                     </tr>

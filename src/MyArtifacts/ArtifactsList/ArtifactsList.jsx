@@ -1,7 +1,7 @@
 import React, { use, useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { Inbox } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import { CgDetailsMore } from 'react-icons/cg';
 import useAuth from '../../Hooks/UseAuth';
@@ -13,6 +13,7 @@ const ArtifactsList = ({ myCreatedArtifacts }) => {
   const artifacts = use(myCreatedArtifacts);
   const { user } = useAuth();
   const { deleteMyCreatedArtifacts } = useApi();
+  const navigate=useNavigate();
 
   const [artiFacts, setArtiFacts] = useState(artifacts);
   console.log(myCreatedArtifacts);
@@ -39,6 +40,7 @@ const ArtifactsList = ({ myCreatedArtifacts }) => {
               });
               const remainingArtifacts = artiFacts.filter(art => art._id !== id)
               setArtiFacts(remainingArtifacts);
+              navigate('/allArtifacts')
             }
           })
       }
