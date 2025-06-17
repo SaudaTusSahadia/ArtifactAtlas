@@ -1,12 +1,46 @@
-# React + Vite
+# ArtifactAtlas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Purpose
 
-Currently, two official plugins are available:
+**ArtifactAtlas** is a modern web application for discovering, sharing, and managing historical artifacts. Users can browse featured and all artifacts, like and save favorites, add new artifacts, and manage their own contributions. The platform is designed with a clean, responsive UI and leverages modern React and Tailwind CSS tooling.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live URL
 
-## Expanding the ESLint configuration
+[https://artifactatlas-8cb0a.web.app/](https://artifactatlas-8cb0a.web.app/)  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Key Features
+
+- 🔍 **Browse Artifacts:** View featured, all, and user-contributed artifacts with rich details.
+- ❤️ **Like & Save:** Like artifacts and view your liked list.
+- ➕ **Add Artifacts:** Authenticated users can add new artifacts with images and descriptions.
+- 📝 **Edit & Delete:** Manage your own artifact posts.
+- 🔒 **Authentication:** Secure login, registration, and password reset via Firebase.
+- 🌙 **Theme Support:** Switch between light/dark and custom themes.
+- ⚡ **Responsive UI:** Fully responsive and mobile-friendly design.
+- 🎨 **Animations:** Smooth transitions and engaging Lottie animations.
+- 🔔 **Notifications:** Toast and alert notifications for user feedback.
+
+## NPM Packages Used
+
+| Package Name         | Description                                                                                   |
+|----------------------|----------------------------------------------------------------------------------------------|
+| @tailwindcss/vite    | Tailwind CSS integration for Vite projects                                                   |
+| axios                | Promise-based HTTP client for making API requests                                            |
+| firebase             | Google Firebase SDK for authentication and database                                          |
+| flowbite-react       | UI components built on top of Tailwind CSS for React                                         |
+| framer-motion        | Animation and gesture library for React                                                      |
+| lottie-react         | Render Lottie animations in React                                                            |
+| lucide-react         | Beautiful & consistent icon library for React                                                |
+| react                | Core React library for building user interfaces                                              |
+| react-dom            | React package for working with the DOM                                                       |
+| react-icons          | Popular icon packs as React components                                                       |
+| react-router         | Declarative routing for React applications                                                   |
+| react-toastify       | Toast notifications for React                                                                |
+| sweetalert2          | Beautiful, responsive, customizable replacement for JavaScript's popup boxes                 |
+| swiper               | Modern mobile touch slider with hardware accelerated transitions                             |
+| tailwindcss          | Utility-first CSS framework for rapid UI development                                         |
+
+---
+
+**Enjoy exploring and contributing
