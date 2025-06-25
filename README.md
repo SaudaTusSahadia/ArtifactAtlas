@@ -43,4 +43,28 @@
 
 ---
 
+
+## 📦 Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/SaudaTusSahadia/ArtifactAtlas.git
+   cd ArtifactAtlas
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+
+3. **Set up environment variables:**
+   - Copy `.env.example` to `.env.local` and fill in your Firebase and backend API credentials.
+
+4. **Start the development server:**
+   ```sh
+   npm run dev
+   ```
+
+---
+
 **Enjoy exploring and contributing
