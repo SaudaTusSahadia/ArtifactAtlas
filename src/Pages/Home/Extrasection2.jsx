@@ -31,8 +31,8 @@ const Extrasection2 = () => {
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold inline-flex items-center gap-2">
-            <CalendarCheck className="w-8 h-8 text-primary" />
+          <h2 className="text-4xl font-bold flex justify-center items-center gap-2">
+            <CalendarCheck className="w-10 h-10 text-primary" />
             Upcoming Exhibitions
           </h2>
           <div className="h-1 w-24 mx-auto mt-2 rounded-full" />

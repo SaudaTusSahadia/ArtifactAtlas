@@ -101,7 +101,7 @@ const Navbar = () => {
 
   return (
     <ThemeProvider theme={navBarTheme}>
-      <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar bg-base-100 shadow-sm sticky top-0 z-50">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -129,7 +129,7 @@ const Navbar = () => {
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">
-            <img src={logo} alt="logo" className="w-[80px]" />
+            <img src={logo} alt="logo" className="w-[80px] hidden md:block" />
             <p className="hidden md:block">
               Artifact<span className="text-primary">Atlas</span>
             </p>

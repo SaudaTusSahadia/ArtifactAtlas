@@ -3,13 +3,18 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
-import img1 from '../../assets/img9.png';
-import img2 from '../../assets/img10.png';
-import img3 from '../../assets/img11.png';
-import img4 from '../../assets/img12.png';
-import img5 from '../../assets/img13.png';
-import img6 from '../../assets/img14.png';
-import img7 from '../../assets/img15.png';
+import img1 from '../../assets/slide1.jpeg';
+import img2 from '../../assets/slide2.jpeg';
+import img3 from '../../assets/slide3.jpeg';
+import img4 from '../../assets/slide4.jpeg';
+import img5 from '../../assets/slide5.png';
+import img6 from '../../assets/slide6.png';
+import img7 from '../../assets/slide7.png';
+import img8 from '../../assets/slide8.png';
+import img9 from '../../assets/slide9.png';
+import img10 from '../../assets/slide10.png';
+import img11 from '../../assets/slide11.png';
+import img12 from '../../assets/slide12.png';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -30,13 +35,18 @@ const Slider = () => {
                     disableOnInteraction: false,
                 }}
             >
-                <SwiperSlide><img src={img1} alt="slider" className="w-full h-[300px] object-cover rounded-lg" /></SwiperSlide>
-                <SwiperSlide><img src={img2} alt="slider" className="w-full h-[300px] object-cover rounded-lg" /></SwiperSlide>
-                <SwiperSlide><img src={img3} alt="slider" className="w-full h-[300px] object-cover rounded-lg" /></SwiperSlide>
-                <SwiperSlide><img src={img4} alt="slider" className="w-full h-[300px] object-cover rounded-lg" /></SwiperSlide>
-                <SwiperSlide><img src={img5} alt="slider" className="w-full h-[300px] object-cover rounded-lg" /></SwiperSlide>
-                <SwiperSlide><img src={img6} alt="slider" className="w-full h-[300px] object-cover rounded-lg" /></SwiperSlide>
-                <SwiperSlide><img src={img7} alt="slider" className="w-full h-[300px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img1} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img2} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img3} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img4} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img5} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img6} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img7} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img8} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img9} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img10} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img11} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
+                <SwiperSlide><img src={img12} alt="slider" className="w-full h-[450px] object-cover rounded-lg" /></SwiperSlide>
             </Swiper>
         </div>
     );

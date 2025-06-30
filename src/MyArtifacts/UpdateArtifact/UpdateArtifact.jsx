@@ -1,19 +1,21 @@
 import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaEdit } from "react-icons/fa";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { createTheme, Datepicker, ThemeProvider } from "flowbite-react";
 import useApi from "../../api/useApi";
 import useAuth from "../../Hooks/UseAuth";
 import { SuccessAlert } from "../../Utilities/AlertMaker";
+import Loading from "../../Pages/Shared/Loading";
 
 const UpdateArtifact = () => {
-  const { user } = useAuth();
+  const { user,loading } = useAuth();
   const { id } = useParams();
   const { getArtifactDetails, updateArtifacts } = useApi();
   const [fetchLoader, setFetchLoader] = useState(false);
   const [data, setData] = useState([]);
+  const navigate=useNavigate();
   const datePickerTheme = createTheme({
     root: {
       base: "flex w-full max-w-xs items-center rounded-lg  p-10",
@@ -38,11 +40,27 @@ const UpdateArtifact = () => {
     }
   }, [user, id]);
 
+if (loading || fetchLoader) {
+  return <Loading></Loading>
+}
+
+if (!data) {
+  return <Loading></Loading>
+}
+
+// console.log(user);
+// console.log(data);
+// console.log(user?.email,data?.artifactAdder.email)
+// Now event is defined, safe to access event.email
+  if (!data.artifactAdder || user.email !== data.artifactAdder.email) {
+    navigate("/*");
+    return null;
+  }
 
 
-  const [discoveredDate, setDiscoveredDate] = useState(
-    data?.discoveredAt ? new Date(data.discoveredAt) : null
-  );
+  // const [discoveredDate, setDiscoveredDate] = useState(
+  //   data?.discoveredAt ? new Date(data.discoveredAt) : null
+  // );
 
 
   const handleUpdateArtifact = (e) => {

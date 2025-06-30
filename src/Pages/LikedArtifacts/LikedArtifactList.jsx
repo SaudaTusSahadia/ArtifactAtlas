@@ -114,7 +114,7 @@ const LikedArtifactList = ({ likedArtifactPromise }) => {
                                 <p className="mb-1"><span className="font-semibold">Created:</span> {like.createdAt}</p>
                                 <p className="mb-1"><span className="font-semibold">Discovered:</span> {like.discoveredAt}</p>
                                 <p className="mb-2"><span className="font-semibold">By:</span> {like.discoveredBy}</p>
-                                <Link to={`/artifactDetails/${like.artifactId}`}>
+                                <Link to={`/artifactDetails/${like._id}`}>
                                     <button className="btn btn-primary btn-sm w-full">View Details</button>
                                 </Link>
                             </div>

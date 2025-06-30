@@ -50,8 +50,8 @@ const Extrasection1 = () => {
         >
           <motion.img
             src={img1}
-            animate= {{y: [0, -50, 0]}}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            animate= {{y: [30, -10, 30]}}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
             alt="Artifact 1"
             className="rounded-xl shadow-xl object-cover h-[300px] w-full"
             whileHover={{ scale: 1.03 }}
@@ -59,7 +59,7 @@ const Extrasection1 = () => {
           <motion.img
             src={img2}
             animate= {{x: [50, 0, 50]}}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
             alt="Artifact 2"
             className="rounded-xl shadow-xl object-cover h-[300px] w-full"
             whileHover={{ scale: 1.03 }}
