@@ -2,6 +2,7 @@ import React from "react";
 import { FaShieldAlt } from "react-icons/fa";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { useNavigate } from "react-router";
+import { motion } from 'framer-motion'
 
 const timeline = [
   {
@@ -34,10 +35,10 @@ const HistorySection = () => {
 
 
   return (
-    <div className="pb-16">
+    <div className="pb-16 overflow-hidden">
         <div className="relative text-center my-10 md:mb-10">
       {/* Background word */}
-      <h1 className="text-5xl md:text-7xl font-extrabold  opacity-15">
+      <h1 className="text-7xl font-extrabold  opacity-15">
         HISTORY
       </h1>
 
@@ -55,16 +56,24 @@ const HistorySection = () => {
     </div>
       <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">
         {/* Left Side: Image */}
-        <div className="overflow-hidden rounded-xl shadow-xl">
+        <motion.div 
+        initial={{x:-100, opacity:0}}
+        whileInView={{x:0, opacity:1}}
+        transition={{duration:1}}
+        className="overflow-hidden rounded-xl shadow-xl">
           <img
             src="history.png"
             alt="Museum"
             className="w-full h-full object-cover"
           />
-        </div>
+        </motion.div>
 
         {/* Right Side: Timeline */}
-        <div>
+        <motion.div
+        initial={{x:100, opacity:0}}
+        whileInView={{x:0, opacity:1}}
+        transition={{duration:1}}
+        >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
             The Great Museum <br />
             <span className="text-primary">Estimated by Romans in 1961</span>
@@ -96,7 +105,7 @@ const HistorySection = () => {
             Learn more our history
             <HiOutlineArrowNarrowRight className="w-4 h-4" />
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

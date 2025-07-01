@@ -21,11 +21,11 @@ const GallerySection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
   return (
-    <section className="py-16 md:mb-10">
+    <section className="py-16 md:mb-10 overflow-hidden">
       <div className="max-w-7xl mx-auto text-center">
         {/* Section Heading */}
         <div className="relative text-center mb-8">
-          <h1 className="text-5xl md:text-7xl font-extrabold opacity-15">
+          <h1 className="text-7xl font-extrabold opacity-15">
             GALLERY
           </h1>
           <h2 className="absolute inset-0 top-6 text-3xl font-bold">
@@ -68,7 +68,7 @@ const GallerySection = () => {
 
         {/* Gallery Grid */}
         <motion.div 
-        initial={{x:30, opacity:0}}
+        initial={{x:100, opacity:0}}
         whileInView={{x:0, opacity:1}}
         transition={{duration:1}}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
