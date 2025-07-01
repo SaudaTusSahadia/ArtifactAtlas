@@ -21,6 +21,8 @@ import FAQ from "../components/FAQ";
 import MyProfile from "../components/MyProfile";
 import ContactUs from "../components/ContactUs";
 import ErrorPage from "../components/ErrorPage";
+import Exibitions from "../components/Exibitions";
+import Discover from "../components/Discover";
 
 
 const router = createBrowserRouter([
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: "/allArtifacts",
         Component: AllArtifacts
+      },
+      {
+        path: "/exibitions",
+        Component: Exibitions
+      },
+      {
+        path: "/discover",
+        Component: Discover
       },
       {
         path: "/addArtifacts",

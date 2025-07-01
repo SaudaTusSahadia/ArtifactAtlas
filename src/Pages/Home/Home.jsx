@@ -5,6 +5,8 @@ import Extrasection2 from './Extrasection2';
 import { ToastContainer } from 'react-toastify';
 import FeaturedArtifacts from './FeaturedArtifacts';
 import Loading from '../Shared/Loading';
+import HistorySection from './HistorySection';
+import GallerySection from './GallerySection';
 
 const Home = () => {
 
@@ -14,11 +16,13 @@ const Home = () => {
         <div>
             <Slider></Slider>
             <div className='max-w-8xl mx-auto'>
-                <Extrasection1></Extrasection1>
+                <HistorySection></HistorySection>
                 <Suspense fallback={<Loading></Loading>}>
                     <FeaturedArtifacts featuredArtifactsPromise={featuredArtifactsPromise}></FeaturedArtifacts>
                 </Suspense>
+                <Extrasection1></Extrasection1>
                 <Extrasection2></Extrasection2>
+                <GallerySection></GallerySection>
             </div>
         </div>
     );
