@@ -1,6 +1,7 @@
 import React from "react";
 import { FaShieldAlt } from "react-icons/fa";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { useNavigate } from "react-router";
 
 const timeline = [
   {
@@ -24,6 +25,14 @@ const timeline = [
 ];
 
 const HistorySection = () => {
+
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/about");
+  };
+
+
   return (
     <div className="pb-16">
         <div className="relative text-center my-10 md:mb-10">
@@ -81,7 +90,9 @@ const HistorySection = () => {
             ))}
           </div>
 
-          <button className="btn btn-outline btn-primary mt-8 flex justify-center items-center gap-2">
+          <button 
+          onClick={handleRedirect}
+          className="btn btn-outline btn-primary mt-8 flex justify-center items-center gap-2">
             Learn more our history
             <HiOutlineArrowNarrowRight className="w-4 h-4" />
           </button>

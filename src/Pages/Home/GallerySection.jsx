@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaShieldAlt } from "react-icons/fa";
+import {motion} from 'framer-motion'
 
 const categories = ["All", "Modern Art", "Ancient Art", "Ancient Statue", "Others"];
 
@@ -40,7 +41,11 @@ const GallerySection = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="relative flex flex-wrap justify-center items-center gap-3 md:gap-5 font-medium text-gray-500 text-sm md:text-base mb-8">
+        <motion.div 
+        initial={{x:-100, opacity:0}}
+        whileInView={{x:0, opacity:1}}
+        transition={{duration:1}}
+        className="relative flex flex-wrap justify-center items-center gap-3 md:gap-5 font-medium text-gray-500 text-sm md:text-base mb-8">
           <div className="absolute top-7 w-full h-px bg-gray-300 z-0"></div>
           {categories.map((category, index) => (
             <button
@@ -59,10 +64,14 @@ const GallerySection = () => {
               )}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <motion.div 
+        initial={{x:30, opacity:0}}
+        whileInView={{x:0, opacity:1}}
+        transition={{duration:1}}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {categorizedImages[activeCategory].map((url, i) => (
             <div
               key={i}
@@ -71,11 +80,11 @@ const GallerySection = () => {
               <img
                 src={url}
                 alt={`Artifact ${i + 1}`}
-                className="w-full h-64 object-cover hover:scale-110 transition-transform duration-300"
+                className="w-full h-64 object-cover hover:scale-130 transition-transform duration-300"
               />
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { MapPin, CalendarCheck, ExternalLink, ClipboardPen } from 'lucide-react';
 import img1 from '../../assets/img1.png';
 import img2 from '../../assets/img2.png';
+import { useNavigate } from 'react-router';
+import { toast, ToastContainer } from 'react-toastify';
 
 const exhibitions = [
   {
@@ -26,6 +28,14 @@ const exhibitions = [
 ];
 
 const Extrasection2 = () => {
+
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/exibitions");
+  };
+
+
   return (
     <section className="py-16 ">
       <div className="max-w-7xl mx-auto">
@@ -72,6 +82,7 @@ const Extrasection2 = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     className="btn bg-amber-600 text-white hover:bg-amber-700 px-4 py-2 rounded-lg flex items-center gap-2"
+                    onClick={handleRedirect}
                   >
                     <ExternalLink size={16} />
                     See Details
@@ -79,6 +90,7 @@ const Extrasection2 = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     className="btn border border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-4 py-2 rounded-lg flex items-center gap-2"
+                    onClick={() => toast('🎉 Registration successful! Welcome!')}
                   >
                     <ClipboardPen size={16} />
                     Register Now
@@ -89,6 +101,7 @@ const Extrasection2 = () => {
           ))}
         </div>
       </div>
+      <ToastContainer></ToastContainer>
     </section>
   );
 };

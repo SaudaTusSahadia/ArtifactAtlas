@@ -3,8 +3,17 @@ import { motion } from 'framer-motion';
 import { Landmark } from 'lucide-react';
 import img1 from '../../assets/img5.png';
 import img2 from '../../assets/img6.png';
+import { useNavigate } from 'react-router';
 
 const Extrasection1 = () => {
+
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/discover");
+  };
+
+
   return (
     <motion.section
       className="w-full py-16"
@@ -36,6 +45,7 @@ const Extrasection1 = () => {
                 }
             }
             className="btn px-6 py-2 rounded-lg shadow-lg"
+            onClick={handleRedirect}
           >
             Discover More
           </motion.button>
