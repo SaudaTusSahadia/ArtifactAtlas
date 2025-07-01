@@ -48,7 +48,7 @@ const ArtifactsList = ({ myCreatedArtifacts }) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-8 px-2">
+    <div className="max-w-7xl mx-auto py-8 px-2">
       {artiFacts.length === 0 ? (
         <div className="text-center py-20 text-gray-500 space-y-4">
           <Inbox className="mx-auto h-16 w-16 text-primary" />
@@ -76,7 +76,7 @@ const ArtifactsList = ({ myCreatedArtifacts }) => {
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12 border-2 border-primary">
+                        <div className="mask mask-squircle h-15 w-15">
                           <img src={art.artifactImage} alt={art.artifactName} />
                         </div>
                       </div>

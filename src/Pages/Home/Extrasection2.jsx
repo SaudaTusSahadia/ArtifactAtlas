@@ -28,15 +28,16 @@ const exhibitions = [
 const Extrasection2 = () => {
   return (
     <section className="py-16 ">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto">
         {/* Section Title */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold flex justify-center items-center gap-2">
-            <CalendarCheck className="w-10 h-10 text-primary" />
+          <h2 className="text-2xl md:text-4xl font-bold flex justify-center items-center gap-2">
+            <CalendarCheck className="w-6 h-6 md:w-10 md:h-10 text-primary" />
             Upcoming Exhibitions
           </h2>
-          <div className="h-1 w-24 mx-auto mt-2 rounded-full" />
+          <div className="h-1 w-16 md:w-24 mx-auto mt-5 md:mt-8 rounded-full bg-primary/50" />
         </div>
+
 
         {/* Exhibitions List */}
         <div className="space-y-10">

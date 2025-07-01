@@ -8,7 +8,7 @@ const ArtifactsCard = ({ artifact }) => {
 
   return (
     <motion.div
-      className="card bg-base-200 shadow-xl rounded-2xl overflow-hidden"
+      className="card bg-base-200 shadow-2xl rounded-2xl overflow-hidden"
       initial={{ opacity: 0, scale: 2 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1 }}

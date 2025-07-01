@@ -9,7 +9,7 @@ const FeaturedArtifacts = ({ featuredArtifactsPromise }) => {
     const Artifacts = use(featuredArtifactsPromise);
 
     return (
-        <section className="max-w-6xl mx-auto my-10">
+        <section className="max-w-7xl mx-auto my-10">
             <div className="text-center mb-10">
                 <div className="text-4xl font-bold mb-5 text-primary">
                     <Typewriter

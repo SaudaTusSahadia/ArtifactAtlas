@@ -12,7 +12,7 @@ const Extrasection1 = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="max-w-6xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-12">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-12">
         {/* Text Content */}
         <motion.div
           className="lg:w-1/2"
@@ -58,8 +58,8 @@ const Extrasection1 = () => {
           />
           <motion.img
             src={img2}
-            animate= {{x: [50, 0, 50]}}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            animate= {{x: [-20, 20, -20]}}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             alt="Artifact 2"
             className="rounded-xl shadow-xl object-cover h-[300px] w-full"
             whileHover={{ scale: 1.03 }}
