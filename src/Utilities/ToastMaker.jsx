@@ -14,4 +14,4 @@ const ErrorToast = (msg) => {
 };
 
 
-export {ErrorToast};
+export { ErrorToast };
