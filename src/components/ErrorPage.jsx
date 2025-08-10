@@ -1,36 +1,58 @@
-import React from 'react';
-import Lottie from 'lottie-react';
-import { Link } from 'react-router';
-import errorPage from '../assets/error.json';
-import { Hammer, HomeIcon, NavigationOff } from 'lucide-react';
+// ErrorPage.jsx
+import React from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const ErrorPage = () => {
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-indigo-800 to-secondary px-6">
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl text-center p-10 max-w-lg w-full border border-white/20">
-                <div className="w-72 mx-auto mb-6">
-                    <Lottie animationData={errorPage} loop={true} />
-                </div>
-                <h1 className="text-4xl font-extrabold text-red-500 mb-2">404 – Page Not Found</h1>
-                <p className="text-gray-300 mb-6">
-                    Uh-oh! The page you're looking for doesn't exist or has been moved. Let's get you back on track.
-                </p>
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white px-4">
+      
+      {/* Animated Number */}
+      <motion.h1
+        className="text-[120px] md:text-[160px] font-extrabold text-red-500 drop-shadow-lg"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        404
+      </motion.h1>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link to="/">
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white flex gap-2 px-6 py-2 rounded-lg font-semibold shadow transition duration-300">
-                            <HomeIcon/> Go Home
-                        </button>
-                    </Link>
-                    <a href="mailto:support@example.com">
-                        <button className="bg-gray-800 hover:bg-gray-700 text-white flex gap-2 px-6 py-2 rounded-lg font-semibold shadow transition duration-300">
-                            <Hammer/> Report Issue
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    );
+      {/* Animated Text */}
+      <motion.p
+        className="text-lg md:text-xl text-gray-300 text-center mb-6"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+      >
+        Oops! The page you’re looking for doesn’t exist.
+      </motion.p>
+
+      {/* Floating Animation Illustration */}
+      <motion.div
+        className="w-48 h-48 mb-8"
+        initial={{ y: 0 }}
+        animate={{ y: [0, -10, 0] }}
+        transition={{ repeat: Infinity, duration: 2 }}
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/7486/7486796.png"
+          alt="Lost"
+          className="w-full h-full object-contain"
+        />
+      </motion.div>
+
+      {/* Button */}
+      <Link to="/">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-6 py-3 bg-red-500 hover:bg-red-600 rounded-full text-lg font-semibold shadow-lg transition"
+        >
+          Go Home
+        </motion.button>
+      </Link>
+    </div>
+  );
 };
 
 export default ErrorPage;
